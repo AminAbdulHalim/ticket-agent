@@ -1,0 +1,15 @@
+# Geheimnisse (API-Keys usw.) - niemals ins Repo
+.env
+
+# Virtuelle Umgebung (rechnerspezifisch)
+.venv/
+venv/
+
+# Python-Zwischendateien
+__pycache__/
+*.pyc
+
+# Editor- und System-Dateien
+.vscode/
+.DS_Store
+Thumbs.db
