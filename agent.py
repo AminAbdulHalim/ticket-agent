@@ -75,6 +75,8 @@ def agent(frage, max_schritte=5):
                 tool_name = block.name
                 tool_eingabe = block.input
                 ergebnis, hat_fehler = fuehre_tool_aus(tool_name, tool_eingabe)
+                print(f"Schritt {schritt}: Tool {tool_name}({tool_eingabe}) -> {ergebnis}"
+                      f"{' [FEHLER]' if hat_fehler else ''}")
                 tool_aufrufe += 1
                 if hat_fehler:
                     fehler += 1
@@ -102,5 +104,5 @@ def agent(frage, max_schritte=5):
 
 
 if __name__ == "__main__":
-    ergebnis = agent("Wie viele offene Tickets gibt es, und was ist das Doppelte davon?")
+    ergebnis = agent("Wie viele offene Tickets gibt es, was ist das Doppelte davon, und welches Datum ist heute?")
     print(ergebnis)
