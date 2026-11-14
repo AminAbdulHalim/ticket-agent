@@ -9,6 +9,9 @@ venv/
 __pycache__/
 *.pyc
 
+# Logdateien (können Fragen und Ticketdaten enthalten)
+*.log
+
 # Editor- und System-Dateien
 .vscode/
 .DS_Store
