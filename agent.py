@@ -6,6 +6,9 @@
 
 import anthropic
 from dotenv import load_dotenv
+import logging
+
+logger = logging.getLogger(__name__)
 
 from tools import TOOLS, TOOL_DEFINITIONEN
 
@@ -31,7 +34,13 @@ def fuehre_tool_aus(name, eingabe):
         return str(ergebnis), False
     except (ValueError, TypeError) as e:
         return str(e), True
-
+    except Exception:
+        logger.exception("Fehler beim Ausführen des Tools %s mit Eingabe %s", name, eingabe)
+        return (
+            "Das Tool ist ausgefallen. Rufe es nicht erneut auf. "
+            "Sage dem Nutzer, dass die Daten gerade nicht verfügbar sind."
+        ), True
+    
 
 def agent(frage, max_schritte=5):
     messages = [{"role": "user", "content": frage}]
@@ -104,5 +113,11 @@ def agent(frage, max_schritte=5):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+    filename="agent.log",
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+    encoding="utf-8",
+    )
     ergebnis = agent("Wie viele offene Tickets gibt es, was ist das Doppelte davon, und welches Datum ist heute?")
     print(ergebnis)
