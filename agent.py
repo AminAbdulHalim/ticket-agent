@@ -17,10 +17,8 @@ client = anthropic.Anthropic()
 
 MODELL = "claude-sonnet-5-5"
 
-
 def fuehre_tool_aus(name, eingabe):
     """Führt ein Tool aus. Gibt (inhalt, ist_fehler) zurück und wirft selbst nie.
-
     Erfolg:  ("42", False)
     Fehler:  ("Ungültiger Status: ...", True)   <- die Meldung geht an das Modell
     """
@@ -64,9 +62,14 @@ def agent(frage, max_schritte=5):
         # Modell ist fertig (oder abgebrochen): es fordert keine Tools mehr an
         if antwort.stop_reason != "tool_use":
             text = "".join(b.text for b in antwort.content if b.type == "text")
+            status = "fertig" if antwort.stop_reason == "end_turn" else antwort.stop_reason
+            logger.info("Schritt %s: %s", schritt, status)
+            logger.info("Antwort: %s", text)
+            logger.info("Status: %s, Modellaufrufe: %s, Toolaufrufe: %s, Fehler: %s, Tokens (ein, aus): %s, %s",
+                        status, modell_aufrufe, tool_aufrufe, fehler, tokens_ein, tokens_aus)       
             print(f"Schritt {schritt}: {text}")
             return {
-                "status": "fertig" if antwort.stop_reason == "end_turn" else antwort.stop_reason,
+                "status": status,
                 "antwort": text,
                 "modell_aufrufe": modell_aufrufe,
                 "tool_aufrufe": tool_aufrufe,
@@ -84,6 +87,12 @@ def agent(frage, max_schritte=5):
                 tool_name = block.name
                 tool_eingabe = block.input
                 ergebnis, hat_fehler = fuehre_tool_aus(tool_name, tool_eingabe)
+                if hat_fehler:
+                    logger.warning("Schritt %s: Tool %s(%s) -> FEHLER: %s",
+                                   schritt, tool_name, tool_eingabe, ergebnis)
+                else:
+                    logger.info("Schritt %s: Tool %s(%s) -> %s",
+                                schritt, tool_name, tool_eingabe, ergebnis)
                 print(f"Schritt {schritt}: Tool {tool_name}({tool_eingabe}) -> {ergebnis}"
                       f"{' [FEHLER]' if hat_fehler else ''}")
                 tool_aufrufe += 1
@@ -101,6 +110,9 @@ def agent(frage, max_schritte=5):
     # ohne dass das Modell vorher fertig war (sonst hätte das return oben gegriffen).
     # Also ist das Schrittlimit erreicht - eine Prüfung per if ist unnötig.
     print(f"Abbruch: Schrittlimit erreicht ({max_schritte} Schritte)")
+    logger.warning("Schrittlimit erreicht (%s Schritte)", max_schritte)
+    logger.info("Status: %s, Modellaufrufe: %s, Toolaufrufe: %s, Fehler: %s, Tokens (ein, aus): %s, %s",
+                "abgebrochen", modell_aufrufe, tool_aufrufe, fehler, tokens_ein, tokens_aus)
     return {
         "status": "abgebrochen",
         "antwort": None,
@@ -110,6 +122,7 @@ def agent(frage, max_schritte=5):
         "tokens_ein": tokens_ein,
         "tokens_aus": tokens_aus,
     }
+
 
 
 if __name__ == "__main__":
