@@ -36,12 +36,16 @@ git clone https://github.com/AminAbdulHalim/ticket-agent.git
 cd ticket-agent
 ```
 
+Alle weiteren Befehle laufen im Ordner `ticket-agent`.
+
 **2. Virtuelle Umgebung anlegen und aktivieren**
 
 ```powershell
-python -m venv .venv
+py -m venv .venv
 .venv\Scripts\Activate.ps1
 ```
+
+Ich nutze hier `py` statt `python`: Auf manchen Windows-Rechnern öffnet `python` nur eine Verknüpfung zum Microsoft Store, und `python -m venv` scheitert. Der Launcher `py` findet die echte Python-Installation. Nach der Aktivierung des venv funktioniert `python` wieder normal.
 
 **3. Pakete installieren**
 
