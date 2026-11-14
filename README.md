@@ -103,5 +103,8 @@ Token-Zahlen und die Formulierung der Antwort schwanken von Lauf zu Lauf. Bei me
 
 ## 7. Hinweis zur Entstehung
 
-- **Von Claude vorgegeben oder geschrieben:** das Gerüst von `tools.py` und `agent.py` (mit Aufgabenmarkierungen), die erfundene `daten/tickets.csv`, der Logging-Grundaufbau sowie Hinweise und Code-Reviews. Aus der letzten Phase außerdem die Korrektur von `ticket_zaehler` nach dem Review, die Logeinträge pro Tool-Aufruf und der Meldungstext im allgemeinen `except`-Zweig.
-- **Von mir geschrieben, getestet und korrigiert:** die Agent-Schleife (unter anderem das Schrittlimit), die Fehlerbehandlung in `fuehre_tool_aus`, das Tool `aktuelles_datum`, das erste CSV-Lesen in `ticket_zaehler`, die Zusammenfassungs-Logzeilen und alle Tests samt Fehlerfällen.
+Dieses Projekt ist eine Lernübung, die ich zusammen mit Claude als Lern-Coach gebaut habe. Die Aufteilung:
+
+- **Von Claude vorgegeben:** das Gerüst von `tools.py` und `agent.py` (mit Aufgabenmarkierungen), die erfundene `daten/tickets.csv`, der Logging-Grundaufbau (`basicConfig` und `logger`-Zeile) sowie Hinweise und Code-Reviews.
+- **Nach Hinweisen von Claude von mir geschrieben:** die Fehlerbehandlung in `fuehre_tool_aus` (Fehler als `tool_result` an das Modell zurückgeben, unbekanntes Tool, `ValueError` und `TypeError`), der allgemeine `except`-Zweig (das Ziel war vorgegeben, den Wortlaut der Meldung habe ich formuliert), die Korrektur von `ticket_zaehler` nach dem Review sowie die Logeinträge pro Tool-Aufruf und die Zusammenfassung am Ende des Laufs (Level und Inhalt waren vorgegeben, die Ausgabe der Antwort im Log habe ich selbst ergänzt).
+- **Selbst geschrieben und getestet:** die Vervollständigung der Agent-Schleife in `agent.py` (Schrittlimit-Abbruch, Zähler), das Tool `aktuelles_datum` (die Beschreibung habe ich nach einem Hinweis verbessert), die Übungen zu Schleife und Fehlerpfad im Übungsordner (nicht im Repo) und die manuellen Tests der Fehlerfälle.
