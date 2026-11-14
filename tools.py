@@ -2,6 +2,8 @@
 #
 # Hier passiert beim Import nichts außer Definitionen: kein print, kein API-Aufruf.
 
+from datetime import date
+
 # Erlaubte Status-Werte an EINER Stelle. Prüfung und Schema nutzen dieselbe Konstante,
 # so müssen Änderungen nur hier gemacht werden.
 ERLAUBT = {"offen", "erledigt"}
@@ -25,11 +27,16 @@ def ticket_zaehler(status):
         )
     return tickets.count(status)
 
+def aktuelles_datum():
+    """Gibt das aktuelle Datum als String zurück."""
+    return str(date.today())
+
 
 # Register: Tool-Name (Text vom Modell) -> Funktion (ohne Klammern!)
 TOOLS = {
     "rechner": rechner,
     "ticket_zaehler": ticket_zaehler,
+    "aktuelles_datum": aktuelles_datum,
 }
 
 # Beschreibung für das Modell: Name, Zweck, erwartete Eingaben (JSON-Schema).
@@ -63,6 +70,19 @@ TOOL_DEFINITIONEN = [
                 },
             },
             "required": ["status"],
+        },
+    },
+    {
+        "name": "aktuelles_datum",
+        "description": (
+            "Liefert das heutige Datum im Format JJJJ-MM-TT (z. B. 2026-11-14). "
+            "Nutze dieses Tool, wenn die Antwort vom aktuellen Datum abhängt, "
+            "weil du das Datum selbst nicht kennst."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": [],
         },
     },
 ]
