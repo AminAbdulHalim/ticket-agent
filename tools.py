@@ -2,7 +2,9 @@
 #
 # Hier passiert beim Import nichts außer Definitionen: kein print, kein API-Aufruf.
 
+import csv
 from datetime import date
+import os
 
 # Erlaubte Status-Werte an EINER Stelle. Prüfung und Schema nutzen dieselbe Konstante,
 # so müssen Änderungen nur hier gemacht werden.
@@ -17,15 +19,24 @@ def rechner(a, b):
             raise ValueError("a und b müssen Zahlen sein")
     return a + b
 
-
 def ticket_zaehler(status):
     """Zählt Tickets mit einem bestimmten Status und gibt die Anzahl zurück."""
-    tickets = ["offen", "offen", "erledigt"]   # später: Daten aus einer CSV
+    # 1. Eingabe prüfen: ein ungültiger Status ist ein Fehler,
+    #    ein gültiger Status ohne Treffer dagegen ein normales Ergebnis (0).
     if status not in ERLAUBT:
         raise ValueError(
             f"Ungültiger Status: {status!r}. Erlaubte Werte: {sorted(ERLAUBT)}"
         )
-    return tickets.count(status)
+    # Ordner dieser Datei + "daten" + "tickets.csv": join setzt das Trennzeichen selbst
+    ordner = os.path.dirname(os.path.abspath(__file__))
+    ticket_datei = os.path.join(ordner, "daten", "tickets.csv")
+    with open(ticket_datei, encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        # 2. Schreibweise in den Daten angleichen: strip() entfernt Leerzeichen,
+        #    lower() macht alles klein, sodass "Offen" und "offen" gleich zählen.
+        #    Mit sum(1 for ...) zählen wir die passenden Zeilen direkt.
+        anzahl = sum(1 for row in reader if row["status"].strip().lower() == status)
+    return anzahl
 
 def aktuelles_datum():
     """Gibt das aktuelle Datum als String zurück."""

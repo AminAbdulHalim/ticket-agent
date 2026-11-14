@@ -1,0 +1,13 @@
+id,betreff,status,erstellt
+1,Login funktioniert nicht,offen,2026-11-02
+2,Rechnung doppelt erhalten,erledigt,2026-11-02
+3,Passwort zurücksetzen,erledigt,2026-11-03
+4,App stürzt beim Start ab,offen,2026-11-04
+5,Lieferadresse ändern,erledigt,2026-11-04
+6,Zahlung wurde abgelehnt,offen,2026-11-05
+7,Newsletter abbestellen,erledigt,2026-11-06
+8,Fehlermeldung beim Upload,Offen,2026-11-09
+9,Konto löschen,erledigt,2026-11-09
+10,Rückerstattung anfragen,offen,2026-11-10
+11,Dark Mode gewünscht,erledigt,2026-11-11
+12,Export als PDF fehlt,offen,2026-11-12
