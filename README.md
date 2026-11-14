@@ -32,7 +32,7 @@ Kosten: Jeder Lauf von `python agent.py` ruft die kostenpflichtige Anthropic-API
 **1. Repo holen**
 
 ```powershell
-git clone <repo-url>
+git clone (https://github.com/AminAbdulHalim/ticket-agent)
 cd ticket-agent
 ```
 
