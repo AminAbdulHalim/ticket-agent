@@ -100,3 +100,8 @@ Token-Zahlen und die Formulierung der Antwort schwanken von Lauf zu Lauf. Bei me
 - **Eingaben per Kommandozeile.** Die Frage und das Schrittlimit würde ich als Argumente übergeben, statt den Code zu ändern.
 - **Tests ins Repo.** Die Fälle `offen`, `erledigt`, ein Status ohne Treffer (0) und ein ungültiger Status würde ich als automatische Tests einchecken.
 - **Daten beim Lesen prüfen.** `ticket_zaehler` sollte Status-Werte in der CSV gegen `ERLAUBT` prüfen und unbekannte Werte melden, statt sie stillschweigend zu überspringen.
+
+## 7. Hinweis zur Entstehung
+
+- **Von Claude vorgegeben oder geschrieben:** das Gerüst von `tools.py` und `agent.py` (mit Aufgabenmarkierungen), die erfundene `daten/tickets.csv`, der Logging-Grundaufbau sowie Hinweise und Code-Reviews. Aus der letzten Phase außerdem die Korrektur von `ticket_zaehler` nach dem Review, die Logeinträge pro Tool-Aufruf und der Meldungstext im allgemeinen `except`-Zweig.
+- **Von mir geschrieben, getestet und korrigiert:** die Agent-Schleife (unter anderem das Schrittlimit), die Fehlerbehandlung in `fuehre_tool_aus`, das Tool `aktuelles_datum`, das erste CSV-Lesen in `ticket_zaehler`, die Zusammenfassungs-Logzeilen und alle Tests samt Fehlerfällen.
